@@ -101,6 +101,13 @@ module.exports = __webpack_require__("kqZg");
 
 /***/ }),
 
+/***/ "4Q3z":
+/***/ (function(module, exports) {
+
+module.exports = require("next/router");
+
+/***/ }),
+
 /***/ "F5FC":
 /***/ (function(module, exports) {
 
@@ -147,6 +154,9 @@ var external_react_ = __webpack_require__("cDcd");
 var head_ = __webpack_require__("xnum");
 var head_default = /*#__PURE__*/__webpack_require__.n(head_);
 
+// EXTERNAL MODULE: external "next/router"
+var router_ = __webpack_require__("4Q3z");
+
 // EXTERNAL MODULE: ./components/meetups/MeetupDetail.module.css
 var MeetupDetail_module = __webpack_require__("YEck");
 var MeetupDetail_module_default = /*#__PURE__*/__webpack_require__.n(MeetupDetail_module);
@@ -184,7 +194,18 @@ var external_mongodb_ = __webpack_require__("ykE2");
 
 
 
+
 const MeetupDetails = props => {
+  const router = Object(router_["useRouter"])();
+  console.log("qqqq props ===", props.meetupData);
+
+  if (router.isFallback) {
+    /*#__PURE__*/
+    Object(jsx_runtime_["jsx"])("h1", {
+      children: "Data is loading"
+    });
+  }
+
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])(external_react_["Fragment"], {
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(head_default.a, {
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
@@ -216,11 +237,13 @@ async function getStaticPaths(context) {
       params: {
         meetupId: meetup._id.toString()
       }
-    }))
+    })),
+    fallback: false
   };
 }
 async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
+  console.log(`Building slug:`, context.params);
   const client = await external_mongodb_["MongoClient"].connect("mongodb+srv://karpenkoihor96:pWfWehXRay99Qwza@practice-project.gqqkcsn.mongodb.net/meetups?retryWrites=true&w=majority");
   const db = client.db();
   const meetupsCollection = db.collection("meetups");

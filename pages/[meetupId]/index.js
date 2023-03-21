@@ -1,10 +1,19 @@
 import { Fragment } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import MeetupDetail from "../../components/meetups/MeetupDetail";
 import { MongoClient, ObjectId } from "mongodb";
 
 const MeetupDetails = (props) => {
+  const router = useRouter();
+
+  console.log("qqqq props ===", props.meetupData);
+
+  if (router.isFallback) {
+    <h1>Data is loading</h1>;
+  }
+
   return (
     <Fragment>
       <Head>
@@ -40,11 +49,14 @@ export async function getStaticPaths(context) {
         meetupId: meetup._id.toString(),
       },
     })),
+    fallback: false,
   };
 }
 
 export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
+
+  console.log(`Building slug:`, context.params);
 
   const client = await MongoClient.connect(
     "mongodb+srv://karpenkoihor96:pWfWehXRay99Qwza@practice-project.gqqkcsn.mongodb.net/meetups?retryWrites=true&w=majority"
