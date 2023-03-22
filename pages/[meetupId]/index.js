@@ -6,12 +6,6 @@ import MeetupDetail from "../../components/meetups/MeetupDetail";
 import { MongoClient, ObjectId } from "mongodb";
 
 const MeetupDetails = (props) => {
-  const router = useRouter();
-
-  if (router.isFallback) {
-    <h1>Data is loading</h1>;
-  }
-
   return (
     <Fragment>
       <Head>
@@ -41,7 +35,7 @@ export async function getStaticPaths(context) {
   client.close();
 
   return {
-    fallback: true,
+    fallback: "blocking",
     paths: meetups.map((meetup) => ({
       params: {
         meetupId: meetup._id.toString(),
