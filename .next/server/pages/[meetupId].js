@@ -197,7 +197,6 @@ var external_mongodb_ = __webpack_require__("ykE2");
 
 const MeetupDetails = props => {
   const router = Object(router_["useRouter"])();
-  console.log("qqqq props ===", props.meetupData);
 
   if (router.isFallback) {
     /*#__PURE__*/
@@ -243,7 +242,6 @@ async function getStaticPaths(context) {
 }
 async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
-  console.log(`Building slug:`, context.params);
   const client = await external_mongodb_["MongoClient"].connect("mongodb+srv://karpenkoihor96:pWfWehXRay99Qwza@practice-project.gqqkcsn.mongodb.net/meetups?retryWrites=true&w=majority");
   const db = client.db();
   const meetupsCollection = db.collection("meetups");

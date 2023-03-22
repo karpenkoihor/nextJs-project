@@ -8,8 +8,6 @@ import { MongoClient, ObjectId } from "mongodb";
 const MeetupDetails = (props) => {
   const router = useRouter();
 
-  console.log("qqqq props ===", props.meetupData);
-
   if (router.isFallback) {
     <h1>Data is loading</h1>;
   }
@@ -55,8 +53,6 @@ export async function getStaticPaths(context) {
 
 export async function getStaticProps(context) {
   const meetupId = context.params.meetupId;
-
-  console.log(`Building slug:`, context.params);
 
   const client = await MongoClient.connect(
     "mongodb+srv://karpenkoihor96:pWfWehXRay99Qwza@practice-project.gqqkcsn.mongodb.net/meetups?retryWrites=true&w=majority"
